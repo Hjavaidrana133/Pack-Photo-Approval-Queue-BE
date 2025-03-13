@@ -14,21 +14,14 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-app.use('/api', routes);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
+app.use('/.netlify/functions/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/.netlify/functions/api', routes);
+app.get('/.netlify/functions/api/health', (req, res) => {
   res.status(200).json({ status: 'UP', timestamp: new Date() });
 });
-
-// Handle 404s
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
-
-// Global error handler
 app.use(errorHandler);
 
 module.exports = app;

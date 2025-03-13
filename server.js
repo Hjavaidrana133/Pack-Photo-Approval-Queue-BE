@@ -2,7 +2,7 @@ const app = require('./src/app');
 const { connectRedis } = require('./src/config/redis');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Connect to Redis before starting the server
 async function startServer() {

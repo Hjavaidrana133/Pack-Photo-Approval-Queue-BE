@@ -5,11 +5,15 @@ let client;
 
 async function connectRedis() {
   try {
-    // Create Redis client
     client = redis.createClient({
-      url: process.env.REDIS_URL
-    });
-
+      username: 'default',
+      password: 'N8IPAZFe8YVMa5XxixYmWyMd631jHttK',
+      socket: {
+          host: 'redis-17731.c17.us-east-1-4.ec2.redns.redis-cloud.com',
+          port: 17731
+      }
+  });
+    
     // Set up event handlers
     client.on('error', (err) => {
       console.error('Redis Client Error:', err);
@@ -34,8 +38,6 @@ async function connectRedis() {
     // Connect to Redis
     await client.connect();
 
-    console.log("-------------------> client", client);
-    
     return client;
   } catch (error) {
     console.error('Failed to connect to Redis:', error);

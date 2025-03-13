@@ -6,44 +6,44 @@ class Order {
    * @param {Object} orderData - The order data
    */
   constructor(orderData) {
-    // Core order details
-    this.orderNumber = orderData.orderNumber; // Unique identifier for the order
-    this.orderStatus = orderData.orderStatus; // Current status of the order (e.g., "packed")
-    this.orderDate = orderData.orderDate; // Timestamp when the order was created
-    this.packedDate = orderData.packedDate; // Timestamp when the order was packed
-    this.shippedCarrier = orderData.shippedCarrier; // Shipping carrier (e.g., "FedEx")
-    this.trackingNumber = orderData.trackingNumber; // Tracking number for the shipment
-    this.customerEmail = orderData.customerEmail; // Customer's email address
-    this.total = orderData.total; // Total order amount
-    this.subTotal = orderData.subTotal; // Subtotal before taxes and discounts
-    this.tax = orderData.tax; // Tax amount
-    this.shippingAddress = orderData.shippingAddress; // Shipping address object
-    this.lineItems = orderData.lineItems; // Array of line items in the order
-    this.statusChanges = orderData.statusChanges; // Array of status changes with timestamps
-    this.shipDate = orderData.shipDate; // Timestamp when the order is shipped
-    this.deliveryPrediction = orderData.deliveryPrediction; // Predicted delivery date
-    this.packedImage = orderData.packedImage; // URL of the packed image
-    this.packedBy = orderData.packedBy; // Email of the user who packed the order
-    this.orderFlag = orderData.orderFlag; // Object containing flag details (e.g., isFlagged, msg)
-    this.onBatch = orderData.onBatch; // Batch information for the order
-    this.readyToPrintDate = orderData.readyToPrintDate; // Timestamp when the order is ready to print
-    this.filesDueBy = orderData.filesDueBy; // Timestamp for files due by
-    this.orderApprovedDate = orderData.orderApprovedDate; // Timestamp when the order was approved
-    this.cutDate = orderData.cutDate; // Timestamp for the cut date
-    this.lastModified = orderData.lastModified; // Timestamp for the last modification
-    this.dealsOnOrder = orderData.dealsOnOrder; // Deals applied to the order
-    this.discounts = orderData.discounts; // Discounts applied to the order
-    this.fb_pixel_id = orderData.fb_pixel_id; // Facebook Pixel ID
-    this.shippingService = orderData.shippingService; // Shipping service details
-    this.orderBatchedDate = orderData.orderBatchedDate; // Timestamp when the order was batched
-    this.timeSpent = orderData.timeSpent; // Time spent on the order
-    this.firstOrder = orderData.firstOrder; // Boolean indicating if it's the customer's first order
-    this.onTheWayPridiction = orderData.onTheWayPridiction; // Prediction for delivery
-    this.printDate = orderData.printDate; // Timestamp when the order was printed
-    this.shippingPridiction = orderData.shippingPridiction; // Shipping prediction details
-    this.paymentInfo = orderData.paymentInfo; // Payment information
-    this.accountFlag = orderData.accountFlag; // Account flag details
-    this.approvalStatus = orderData.approvalStatus || 'pending'; // New field for approve/reject status
+
+    this.orderNumber = orderData.orderNumber;
+    this.orderStatus = orderData.orderStatus;
+    this.orderDate = orderData.orderDate;
+    this.packedDate = orderData.packedDate;
+    this.shippedCarrier = orderData.shippedCarrier;
+    this.trackingNumber = orderData.trackingNumber;
+    this.customerEmail = orderData.customerEmail;
+    this.total = orderData.total;
+    this.subTotal = orderData.subTotal;
+    this.tax = orderData.tax;
+    this.shippingAddress = orderData.shippingAddress;
+    this.lineItems = orderData.lineItems;
+    this.statusChanges = orderData.statusChanges;
+    this.shipDate = orderData.shipDate;
+    this.deliveryPrediction = orderData.deliveryPrediction;
+    this.packedImage = orderData.packedImage;
+    this.packedBy = orderData.packedBy;
+    this.orderFlag = orderData.orderFlag;
+    this.onBatch = orderData.onBatch;
+    this.readyToPrintDate = orderData.readyToPrintDate;
+    this.filesDueBy = orderData.filesDueBy;
+    this.orderApprovedDate = orderData.orderApprovedDate;
+    this.cutDate = orderData.cutDate;
+    this.lastModified = orderData.lastModified;
+    this.dealsOnOrder = orderData.dealsOnOrder;
+    this.discounts = orderData.discounts;
+    this.fb_pixel_id = orderData.fb_pixel_id;
+    this.shippingService = orderData.shippingService;
+    this.orderBatchedDate = orderData.orderBatchedDate;
+    this.timeSpent = orderData.timeSpent;
+    this.firstOrder = orderData.firstOrder;
+    this.onTheWayPridiction = orderData.onTheWayPridiction;
+    this.printDate = orderData.printDate;
+    this.shippingPridiction = orderData.shippingPridiction;
+    this.paymentInfo = orderData.paymentInfo;
+    this.accountFlag = orderData.accountFlag;
+    this.approvalStatus = orderData.approvalStatus || 'pending';
   }
 
   /**
@@ -53,13 +53,13 @@ class Order {
   serialize() {
     const serialized = {};
 
-    // Iterate over all properties of the order
+
     for (const [key, value] of Object.entries(this)) {
       if (typeof value === 'object' && value !== null) {
-        // Convert nested objects/arrays to JSON strings
+
         serialized[key] = JSON.stringify(value);
       } else {
-        // Pass primitive values as-is
+
         serialized[key] = value;
       }
     }
@@ -77,7 +77,7 @@ class Order {
 
     const parsed = { ...data };
 
-    // Parse JSON strings back into objects
+
     const jsonFields = [
       'shippingAddress',
       'lineItems',
@@ -114,15 +114,15 @@ class Order {
     const key = `order:${this.orderNumber}`;
     const serialized = this.serialize();
 
-    // Convert the serialized object to a flat key-value pair for hSet
+
     const flatData = [];
     for (const [field, value] of Object.entries(serialized)) {
-      if (value !== undefined) { // Skip undefined values
+      if (value !== undefined) {
         flatData.push(field, value);
       }
     }
 
-    // Use hSet with the flattened data
+
     await client.hSet(key, flatData);
 
     return this;
@@ -150,25 +150,25 @@ class Order {
    */
   static async findByFilters(filters) {
     const client = getRedisClient();
-    const keys = await client.keys('order:*'); // Get all order keys
+    const keys = await client.keys('order:*');
 
     const orders = [];
     for (const key of keys) {
-      const data = await client.hGetAll(key); // Fetch order data
+      const data = await client.hGetAll(key);
       const order = Order.deserialize(data);
       orders.push(order);
     }
 
-    // Apply filters
+
     return orders.filter((order) => {
       let match = true;
 
-      // Filter by approvalStatus
+
       if (filters.approvalStatus && order.approvalStatus !== filters.approvalStatus) {
         match = false;
       }
 
-      // Filter by orderNumber (case-insensitive search)
+
       if (filters.search && !order.orderNumber.toLowerCase().includes(filters.search.toLowerCase())) {
         match = false;
       }
@@ -186,10 +186,10 @@ class Order {
     const client = getRedisClient();
     const key = `order:${this.orderNumber}`;
 
-    // Update status in memory
+
     this.orderStatus = newStatus;
 
-    // Add to status changes
+
     const statusChange = JSON.stringify({
       date: Date.now(),
       status: newStatus,
@@ -209,12 +209,12 @@ class Order {
     statusChanges.push(statusChange);
     this.statusChanges = JSON.stringify(statusChanges);
 
-    // If status is "packed", set packed date
+
     if (newStatus === 'packed') {
       this.packedDate = Date.now();
     }
 
-    // Update order in Redis
+
     const serialized = this.serialize();
     await client.hSet(key, serialized);
 

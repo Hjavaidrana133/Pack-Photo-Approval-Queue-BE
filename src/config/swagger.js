@@ -16,9 +16,13 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: 'https://orderbackend.netlify.app/.netlify/functions',
         description: 'Development server',
       },
+      {
+        url: 'http://localhost:3000/.netlify/functions',
+        description: 'Local server',
+      }
     ],
     components: {
       schemas: {
