@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
 const { swaggerUi, swaggerDocs } = require('./config/swagger');
+const swaggerUiDist = require('swagger-ui-dist');
 
 const app = express();
 
@@ -14,7 +15,9 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
+  customCssUrl: swaggerUiDist.getAbsoluteFSPath() + '/swagger-ui.css'
+}));
 app.use('/api', routes);
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP', timestamp: new Date() });
