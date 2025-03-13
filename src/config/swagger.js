@@ -1,5 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+require('dotenv').config();
 
 // Swagger definition
 const swaggerOptions = {
@@ -16,12 +17,8 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'https://pack-photo-approval-queue.netlify.app/.netlify/functions',
-        description: 'Development server',
-      },
-      {
-        url: 'http://localhost:3000/.netlify/functions',
-        description: 'Local server',
+        url: `${process.env.Base_URL}`,
+        description: 'Server',
       }
     ],
     components: {
