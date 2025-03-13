@@ -17,8 +17,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        // url: `${process.env.Base_URL}`,
-        url:'http://localhost:3000',
+        url: `${process.env.Base_URL}`,
         description: 'Server',
       }
     ],
