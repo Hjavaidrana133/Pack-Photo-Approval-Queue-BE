@@ -6,11 +6,11 @@ let client;
 async function connectRedis() {
   try {
     client = redis.createClient({
-      username: 'default',
-      password: 'x7nhrjaNu9a470vEWErIvoXuV5VEJZVE',
+      username: process.env.Redis_Username,
+      password: process.env.Redis_Password,
       socket: {
-          host: 'redis-14929.c238.us-central1-2.gce.redns.redis-cloud.com',
-          port: 14929
+          host: process.env.Redis_Host,
+          port: process.env.Redis_Port
       }
   });
     

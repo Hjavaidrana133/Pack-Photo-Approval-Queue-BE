@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 
-app.use('/.netlify/functions/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use('/.netlify/functions/api', routes);
-app.get('/.netlify/functions/api/health', (req, res) => {
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api', routes);
+app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP', timestamp: new Date() });
 });
 app.use((req, res) => {
