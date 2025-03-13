@@ -16,7 +16,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'https://orderbackend.netlify.app/.netlify/functions',
+        url: 'https://pack-photo-approval-queue.netlify.app/.netlify/functions',
         description: 'Development server',
       },
       {

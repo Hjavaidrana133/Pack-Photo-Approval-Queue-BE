@@ -7,10 +7,10 @@ async function connectRedis() {
   try {
     client = redis.createClient({
       username: 'default',
-      password: 'N8IPAZFe8YVMa5XxixYmWyMd631jHttK',
+      password: 'x7nhrjaNu9a470vEWErIvoXuV5VEJZVE',
       socket: {
-          host: 'redis-17731.c17.us-east-1-4.ec2.redns.redis-cloud.com',
-          port: 17731
+          host: 'redis-14929.c238.us-central1-2.gce.redns.redis-cloud.com',
+          port: 14929
       }
   });
     

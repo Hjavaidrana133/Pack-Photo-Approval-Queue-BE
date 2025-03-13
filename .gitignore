@@ -23,3 +23,9 @@ coverage/
 .idea/
 .vscode/
 .vercel
+
+# Local Netlify folder
+.netlify
+
+#package-lock
+/package-lock.json
