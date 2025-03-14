@@ -9,17 +9,15 @@ const swaggerUiDist = require('swagger-ui-dist');
 
 const app = express();
 
-app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
-  customCssUrl: swaggerUiDist.getAbsoluteFSPath() + '/swagger-ui.css'
-}));
-
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
 
-
+app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
+  customCssUrl: swaggerUiDist.getAbsoluteFSPath() + '/swagger-ui.css'
+}));
 app.use('/api', routes);
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP', timestamp: new Date() });
