@@ -4,11 +4,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const path = require('path');
 
-// Import your routes, error handlers, etc.
 const routes = require('./routes');
 const errorHandler = require('./middleware/errorHandler');
 
-// Import the Swagger config
 const { swaggerUi, swaggerDocs } = require('./config/swagger');
 
 const app = express();
